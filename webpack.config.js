@@ -1,9 +1,10 @@
 module.exports = {
   context: __dirname,
-  entry: {
-    javascript: './index.js',
-    html: './index.html'
-  },
+  entry: [
+    'babel-polyfill',
+    './index.js',
+    './index.html'
+  ],
 
   output: {
     filename: 'app.js',
@@ -13,9 +14,13 @@ module.exports = {
   module: {
     loaders: [
       {
+        loader: 'babel-loader',
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader?optional[]=runtime&stage=0']
+        query: {
+          plugins: ['transform-runtime'],
+          presets: ['es2015', 'react']
+        }
       },
       {
         test: /\.html$/,
